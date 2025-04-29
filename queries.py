@@ -17,6 +17,13 @@ def get_all_students():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Students")
         return cursor.fetchall()
+    
+def get_student_by_email(email):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Students WHERE email = ?", (email,))
+        return cursor.fetchall()
+
 
 def update_student_email(student_id, new_email):
     with connect_db() as conn:

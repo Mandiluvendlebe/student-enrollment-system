@@ -5,30 +5,46 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form method="POST" action="/enroll" class="card p-3 shadow-sm mb-4">
-            <h5>Enroll Student in Course</h5>
-            <div class="mb-2">
-                <label>Student ID</label>
-                <input type="number" name="student_id" class="form-control" required>
-            </div>
+        <form method="POST" action="/enroll_student" class="card p-3 shadow-sm mb-4">
+            <h5>Enroll a Student</h5>
+
+            <!-- Dropdown for Selecting a Student -->
             <div class="mb-3">
-                <label>Course ID</label>
-                <input type="number" name="course_id" class="form-control" required>
+                <label for="student_select">Select Student</label>
+                <select id="student_select" name="student_id" class="form-select" required>
+                    {% for student in students %}
+                    <option value="{{ student[0] }}">{{ student[1] }} ({{ student[2] }})</option>
+                    {% endfor %}
+                </select>
             </div>
-            <button class="btn btn-primary"><i class="bi bi-check2-circle"></i> Enroll</button>
+
+            <!-- Dropdown for Selecting a Course -->
+            <div class="mb-3">
+                <label for="course_select">Select Course</label>
+                <select id="course_select" name="course_id" class="form-select" required>
+                    {% for course in courses %}
+                    <option value="{{ course[0] }}">{{ course[1] }} ({{ course[2] }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="btn btn-success"><i class="bi bi-check-circle"></i> Enroll</button>
         </form>
     </div>
 
     <div class="col-md-6">
         <div class="card shadow-sm">
             <div class="card-header">
-                <strong><i class="bi bi-table"></i> Enrollments List</strong>
+                <strong><i class="bi bi-list-task"></i> Current Enrollments</strong>
             </div>
             <ul class="list-group list-group-flush">
                 {% for enrollment in enrollments %}
                 <li class="list-group-item">
-                    <i class="bi bi-person-fill"></i> Student ID: {{ enrollment[0] }} –
-                    <i class="bi bi-book"></i> Course ID: {{ enrollment[1] }}
+                    <i class="bi bi-person"></i> {{ enrollment.student_name }} 
+                    <small class="text-muted">({{ enrollment.student_email }})</small> 
+                    enrolled in 
+                    <i class="bi bi-book"></i> {{ enrollment.course_name }} 
+                    <small class="text-muted">({{ enrollment.course_code }})</small>
                 </li>
                 {% endfor %}
             </ul>
