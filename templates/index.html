@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-5 fw-bold"><i class="bi bi-mortarboard-fill text-primary"></i> Student Enrollment System</h1>
+    <p class="lead mt-3">Manage students, courses, and enrollments with ease.</p>
+    <div class="mt-4">
+        <a href="/students" class="btn btn-primary m-2">
+            <i class="bi bi-person-fill"></i> Manage Students
+        </a>
+        <a href="/courses" class="btn btn-success m-2">
+            <i class="bi bi-book-fill"></i> Manage Courses
+        </a>
+        <a href="/enrollments" class="btn btn-warning m-2 text-white">
+            <i class="bi bi-pencil-square"></i> Enroll Students
+        </a>
+    </div>
+</div>
+{% endblock %}

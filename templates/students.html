@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-person-lines-fill"></i> Students</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="POST" action="/add_student" class="card p-3 shadow-sm mb-4">
+            <h5>Add New Student</h5>
+            <div class="mb-2">
+                <label>First Name</label>
+                <input type="text" name="first_name" class="form-control" required>
+            </div>
+            <div class="mb-2">
+                <label>Last Name</label>
+                <input type="text" name="last_name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <button class="btn btn-success"><i class="bi bi-plus-circle"></i> Add Student</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <strong><i class="bi bi-list-ul"></i> All Students</strong>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for student in students %}
+                <li class="list-group-item">
+                    <i class="bi bi-person"></i> {{ student[1] }} {{ student[2] }} <br>
+                    <small class="text-muted">{{ student[3] }}</small>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
