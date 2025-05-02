@@ -40,11 +40,11 @@
             <ul class="list-group list-group-flush">
                 {% for enrollment in enrollments %}
                 <li class="list-group-item">
-                    <i class="bi bi-person"></i> {{ enrollment.student_name }} 
-                    <small class="text-muted">({{ enrollment.student_email }})</small> 
-                    enrolled in 
-                    <i class="bi bi-book"></i> {{ enrollment.course_name }} 
-                    <small class="text-muted">({{ enrollment.course_code }})</small>
+                    {{ enrollment.student_name }} enrolled in {{ enrollment.course_name }}
+                    <a href="{{ url_for('edit_enrollment', enrollment_id=enrollment[0]) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="{{ url_for('delete_enrollment_route', enrollment_id=enrollment[0]) }}" method="POST" style="display:inline;">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
                 </li>
                 {% endfor %}
             </ul>

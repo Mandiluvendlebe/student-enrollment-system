@@ -18,12 +18,17 @@ def get_all_students():
         cursor.execute("SELECT * FROM Students")
         return cursor.fetchall()
     
+def get_student_by_id(student_id):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Students WHERE student_id = ?", (student_id,))
+        return cursor.fetchall()
+    
 def get_student_by_email(email):
     with connect_db() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Students WHERE email = ?", (email,))
         return cursor.fetchall()
-
 
 def update_student_email(student_id, new_email):
     with connect_db() as conn:
@@ -31,6 +36,16 @@ def update_student_email(student_id, new_email):
         cursor.execute("""
             UPDATE Students SET email = ? WHERE student_id = ?
         """, (new_email, student_id))
+        conn.commit()
+
+def update_student(student_id, first_name, last_name, email):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE Students
+            SET first_name = ?, last_name = ?, email = ?
+            WHERE student_id = ?
+        """, (first_name, last_name, email, student_id))
         conn.commit()
 
 def delete_student(student_id):
@@ -59,6 +74,22 @@ def get_all_courses():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Courses")
         return cursor.fetchall()
+    
+def get_course_by_id(course_id):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Courses WHERE course_id = ?", (course_id,))
+        return cursor.fetchall()
+    
+def update_course(course_id, course_name, course_code):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE Courses
+            SET course_name = ?, course_code = ?
+            WHERE course_id = ?
+        """, (course_name, course_code, course_id))
+        conn.commit()
 
 def delete_course(course_id):
     with connect_db() as conn:
@@ -90,3 +121,25 @@ def get_all_enrollments():
             JOIN Courses c ON e.course_id = c.course_id
         """)
         return cursor.fetchall()
+    
+def get_enrollment_by_id(enrollment_id):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM Courses WHERE enrollment_id = ?", (enrollment_id,))
+        return cursor.fetchall()
+
+def update_enrollment(enrollment_id, student_id, course_id):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE Enrollments
+            SET student_id = ?, course_id = ?
+            WHERE enrollment_id = ?
+        """, (student_id, course_id, enrollment_id))
+        conn.commit()
+
+def delete_enrollment(enrollment_id):
+    with connect_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM Enrollments WHERE enrollment_id = ?", (enrollment_id,))
+        conn.commit()
